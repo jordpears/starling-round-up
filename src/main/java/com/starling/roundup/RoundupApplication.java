@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class RoundupApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(RoundupApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(RoundupApplication.class, args);
+    }
 
 }
