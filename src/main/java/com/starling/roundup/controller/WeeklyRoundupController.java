@@ -1,5 +1,6 @@
 package com.starling.roundup.controller;
 
+import com.starling.roundup.model.WeeklyRoundupResponse;
 import com.starling.roundup.service.WeeklyRoundupService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ public class WeeklyRoundupController {
     private final WeeklyRoundupService weeklyRoundupService;
 
     @GetMapping(value = "/weekly-roundup")
-    public ResponseEntity weeklyRoundup(@RequestHeader("Access-Token") String bearerToken) {
+    public ResponseEntity<WeeklyRoundupResponse> weeklyRoundup(@RequestHeader("Access-Token") String bearerToken) {
 
         return ResponseEntity.ok().body(weeklyRoundupService.doWeeklyRoundup(bearerToken));
 
