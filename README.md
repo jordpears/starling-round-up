@@ -17,6 +17,6 @@ The endpoint is http://localhost:8080/weekly-roundup
 
 Once the service is running you can view the generated documentation and call the service using the following swagger URL http://localhost:8080/swagger-ui.html
 
-For validation the service needs a header as documented in the above swagger - this token should be the exact string as taken from a sandbox customers Access Token. I am using this token to auth the downstream API calls.
+The service needs a header called "Access Token" - this token should be the exact string as taken from a sandbox customers Access Token. I am using this token to auth the downstream API calls.
 
-[header](header.png)
+![header](header.png)
