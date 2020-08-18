@@ -2,12 +2,13 @@
 A spring-boot application to call Starling Bank APIs to complete the roundup feature. 
 
 Some design choices/assumptions that were made:
-1) Only GBP accounts are supported.
-2) Roundup will only be conducted on the most recently created user account
-3) A default savings bucket will be made if one doesn't exist - otherwise the most recent one will be the one to deposit into.
-4) A 400 - Bad request will be returned if the user has insufficient funds to do the transfer, or has no GBP accounts.
-5) A 503 - Service Unavailable will be returned if the service cannot call the starling API's
-6) A 403 - Forbidden will be returned if the service given Access-Token is invalid.
+- Only GBP accounts are supported.
+- Roundup will only be conducted on the most recently created user account.
+- A default savings bucket will be made if one doesn't exist - otherwise the most recent one will be the one to deposit into.
+- 400 - Bad request will be returned if the user has insufficient funds to do the transfer, or has no GBP accounts.
+- 503 - Service Unavailable will be returned if the service cannot call the starling API's
+- 403 - Forbidden will be returned if the service given Access-Token is invalid.
+- 500 - Internal Service Error will be returned for unhandled generic Exception.
 
 Run the tests with `mvn clean test`
 

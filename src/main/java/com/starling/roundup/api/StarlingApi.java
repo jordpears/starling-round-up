@@ -26,8 +26,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class StarlingApi {
 
-    private HttpHeaders headers;
-    private RestTemplate restTemplate;
+    private final HttpHeaders headers;
+    private final RestTemplate restTemplate;
 
     private final String BASE_URL = "https://api-sandbox.starlingbank.com/";
 
