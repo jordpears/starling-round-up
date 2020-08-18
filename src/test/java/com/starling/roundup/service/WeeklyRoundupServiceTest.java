@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class WeeklyRoundupServiceTest {
@@ -45,7 +45,7 @@ class WeeklyRoundupServiceTest {
     }
 
     @Test
-    void whenDoWeeklyRoundupCalledAndAPIsReturnOKandValidDataThenCorrectModelReturned() {
+    void whenDoWeeklyRoundupCalledAndAPIsReturnOKThenCorrectModelReturned() {
 
         String expectedAccountId = "testId";
         BigInteger expectedRoundupAmount = BigInteger.valueOf(95);
@@ -65,6 +65,22 @@ class WeeklyRoundupServiceTest {
         when(starlingApiRepository.getTransactionsSinceDate(expectedAccountId, "testCategoryId", OffsetDateTime.now(clock).minusDays(7), "token")).thenReturn(Collections.singletonList(transaction));
         when(starlingApiRepository.getSavingsGoalId("testId", "token")).thenReturn(expectedSavingsGoalId);
 
+        assertEquals(expectedResponse, weeklyRoundupService.doWeeklyRoundup("token"));
+    }
+
+    @Test
+    void whenDoWeeklyRoundupCalledAndNoTransactionsInPeriodThenCorrectModelReturned() {
+
+        WeeklyRoundupResponse expectedResponse = new WeeklyRoundupResponse(BigInteger.ZERO, "", "");
+
+        when(starlingApiRepository.getMostRecentGBPUserAccount("token")).thenReturn(account);
+
+        when(account.getAccountId()).thenReturn("testId");
+        when(account.getDefaultCategory()).thenReturn("testCategoryId");
+
+        when(starlingApiRepository.getTransactionsSinceDate("testId", "testCategoryId", OffsetDateTime.now(clock).minusDays(7), "token")).thenReturn(Collections.emptyList());
+
+        verifyNoMoreInteractions(starlingApiRepository);
         assertEquals(expectedResponse, weeklyRoundupService.doWeeklyRoundup("token"));
     }
 

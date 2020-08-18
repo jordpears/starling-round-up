@@ -9,7 +9,7 @@ import java.math.BigInteger;
 @AllArgsConstructor
 public class WeeklyRoundupResponse {
 
-    private BigInteger roundupAmount;
+    private BigInteger roundupAmountMinorUnit;
     private String fromAccountId;
     private String toSavingsGoalId;
 }

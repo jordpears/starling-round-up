@@ -28,11 +28,15 @@ public class WeeklyRoundupService {
         Account account = starlingApiRepository.getMostRecentGBPUserAccount(bearerToken);
         List<Transaction> transactions = starlingApiRepository.getTransactionsSinceDate(account.getAccountId(), account.getDefaultCategory(), dateOneWeekAgo, bearerToken);
         BigInteger roundupAmount = getRoundupAmount(transactions);
-        String savingsGoalId = starlingApiRepository.getSavingsGoalId(account.getAccountId(), bearerToken);
 
-        starlingApiRepository.transferFundsToSavingsPot(account.getAccountId(), roundupAmount, savingsGoalId, bearerToken);
+        if(roundupAmount.equals(BigInteger.ZERO)){
+            return new WeeklyRoundupResponse(roundupAmount, "", "");
+        } else {
+            String savingsGoalId = starlingApiRepository.getSavingsGoalId(account.getAccountId(), bearerToken);
+            starlingApiRepository.transferFundsToSavingsPot(account.getAccountId(), roundupAmount, savingsGoalId, bearerToken);
+            return new WeeklyRoundupResponse(roundupAmount, account.getAccountId(), savingsGoalId);
+        }
 
-        return new WeeklyRoundupResponse(roundupAmount, account.getAccountId(), savingsGoalId);
     }
 
     public BigInteger getRoundupAmount(List<Transaction> transactions) {
