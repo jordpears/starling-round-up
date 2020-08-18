@@ -48,7 +48,7 @@ class WeeklyRoundupServiceTest {
     void whenDoWeeklyRoundupCalledAndAPIsReturnOKThenCorrectModelReturned() {
 
         String expectedAccountId = "testId";
-        BigInteger expectedRoundupAmount = BigInteger.valueOf(95);
+        MonetaryAmount expectedRoundupAmount = new MonetaryAmount("GBP", BigInteger.valueOf(95));
         String expectedSavingsGoalId = "savingsGoalIdd";
 
         WeeklyRoundupResponse expectedResponse = new WeeklyRoundupResponse(expectedRoundupAmount, expectedAccountId, expectedSavingsGoalId);
@@ -71,7 +71,7 @@ class WeeklyRoundupServiceTest {
     @Test
     void whenDoWeeklyRoundupCalledAndNoTransactionsInPeriodThenCorrectModelReturned() {
 
-        WeeklyRoundupResponse expectedResponse = new WeeklyRoundupResponse(BigInteger.ZERO, "", "");
+        WeeklyRoundupResponse expectedResponse = new WeeklyRoundupResponse(new MonetaryAmount("GBP", BigInteger.ZERO), "", "");
 
         when(starlingApiRepository.getMostRecentGBPUserAccount("token")).thenReturn(account);
 

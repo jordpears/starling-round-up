@@ -1,6 +1,7 @@
 package com.starling.roundup.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.starling.roundup.model.MonetaryAmount;
 import com.starling.roundup.model.WeeklyRoundupResponse;
 import com.starling.roundup.service.WeeklyRoundupService;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ class WeeklyRoundupControllerTest {
     @Test
     void whenServiceReturnsDataThenControllerReturnsTheSameData() throws Exception {
 
-        WeeklyRoundupResponse expected = new WeeklyRoundupResponse(BigInteger.TEN, "fromId", "toId");
+        WeeklyRoundupResponse expected = new WeeklyRoundupResponse(new MonetaryAmount("GBP", BigInteger.TEN), "fromId", "toId");
 
         when(weeklyRoundupService.doWeeklyRoundup("test")).thenReturn(expected);
 

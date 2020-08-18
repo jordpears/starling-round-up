@@ -56,17 +56,11 @@ public class StarlingApiRepository {
 
     public Account getMostRecentGBPUserAccount(String bearerToken) {
 
-        List<Account> allUserAccounts = starlingApi.getUserAccounts(bearerToken);
-
-        allUserAccounts.sort(Comparator.comparing(Account::getCreatedAt).reversed());
-
-        for (Account account : allUserAccounts) {
-            if (account.getCurrency().equals("GBP")) {
-                return account;
-            }
-        }
-
-        throw new BusinessLogicException("No GBP accounts found for user");
+        return starlingApi.getUserAccounts(bearerToken).stream()
+                .sorted(Comparator.comparing(Account::getCreatedAt).reversed())
+                .filter(account -> account.getCurrency().equals("GBP"))
+                .findFirst()
+                .orElseThrow(() -> new BusinessLogicException("No GBP accounts found for user"));
     }
 
 

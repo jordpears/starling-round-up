@@ -30,11 +30,11 @@ public class WeeklyRoundupService {
         BigInteger roundupAmount = getRoundupAmount(transactions);
 
         if(roundupAmount.equals(BigInteger.ZERO)){
-            return new WeeklyRoundupResponse(roundupAmount, "", "");
+            return new WeeklyRoundupResponse(new MonetaryAmount("GBP", roundupAmount), "", "");
         } else {
             String savingsGoalId = starlingApiRepository.getSavingsGoalId(account.getAccountId(), bearerToken);
             starlingApiRepository.transferFundsToSavingsPot(account.getAccountId(), roundupAmount, savingsGoalId, bearerToken);
-            return new WeeklyRoundupResponse(roundupAmount, account.getAccountId(), savingsGoalId);
+            return new WeeklyRoundupResponse(new MonetaryAmount("GBP", roundupAmount), account.getAccountId(), savingsGoalId);
         }
 
     }
